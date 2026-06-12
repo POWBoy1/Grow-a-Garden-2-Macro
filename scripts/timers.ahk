@@ -29,7 +29,7 @@ Shops := {
         name: "Gears",
         lastTime: LastShopTime,
         duration: ConvertSeconds(0, 5, 0),
-        buy: () => BuyGears()
+        buy: (self) => BuyGears()
     },
     Crates: {
         name: "Crates",
