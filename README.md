@@ -1,4 +1,4 @@
-# 🍏 Epic's Grow A Garden 2 Macro
+# 🍄 Epic's Grow A Garden 2 Macro
 
 ![GitHub Repo stars](https://img.shields.io/github/stars/epicisgood/Grow-a-Garden-2-Macro?style=flat)
 ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/epicisgood/Grow-a-Garden-2-Macro/total)
