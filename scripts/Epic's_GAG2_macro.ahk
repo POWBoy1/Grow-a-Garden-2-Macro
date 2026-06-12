@@ -373,6 +373,7 @@ ZoomAlign(){
 
 
 CameraCorrection(){
+    Disconnect()
     Clickbutton_Tabs("Garden")
     ZoomAlign()
     Click("Right", "Down")
