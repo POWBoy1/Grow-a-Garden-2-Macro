@@ -2,125 +2,71 @@ nowUnix() {
     return DateDiff(A_NowUTC, "19700101000000", "Seconds")
 }
 
-
-LastShopTime := nowUnix()
-LastEggsTime := nowUnix()
-LastEasterSeedTime := nowUnix()
-LastCreepyCrittersTime := nowUnix()
-LastMerchantTime := nowUnix()
-
-LastGearCraftingTime := nowUnix()
-LastSeedCraftingTime := nowUnix()
-LastEventCraftingtime := nowUnix()
-LastCookingTime := nowUnix()
-
-LastCosmetics := nowUnix()
-
-RewardChecker() {
-    global LastGearCraftingTime, EventCraftingtime, LastSeedCraftingTime, LastCookingTime, LastShopTime, LastEggsTime, LastCosmetics, LastMerchantTime ,LastEasterSeedTime , LastCreepyCrittersTime
-
-    static CookingTime := Integer(IniRead(settingsFile, "Settings", "CookingTime") * 1.1)
-
-    Rewardlist := []
-
-    currentTime := nowUnix()
-
-
-    if (currentTime - LastShopTime >= 300) {
-        LastShopTime := currentTime
-        Rewardlist.Push("Seeds")
-        Rewardlist.Push("Gears")        
+If_Minute(minuteinput){
+    if (Mod(A_Min, 10) = minuteinput){
+        return true
     }
-    if (currentTime - LastEggsTime >= 1800) {
-        LastEggsTime := currentTime
-        Rewardlist.Push("Eggs")
-    }
-    if (currentTime - LastCreepyCrittersTime >= 1800) {
-        LastCreepyCrittersTime := currentTime
-        Rewardlist.Push("CreepyCritters")
-    }
-    if (currentTime - LastEasterSeedTime >= 300) {
-        LastEasterSeedTime := currentTime
-        Rewardlist.Push("EasterSeed")
-    }
-    if (currentTime - LastMerchantTime >= 3600) {
-        LastMerchantTime := currentTime
-        Rewardlist.Push("TravelingMerchant")
-    }
-    if (currentTime - LastCosmetics >= 14400) {
-        LastCosmetics := currentTime
-        Rewardlist.Push("Cosmetics")
-    }
-    if (currentTime - LastGearCraftingTime >= GearCraftingTime) {
-        Rewardlist.Push("GearCrafting")
-    }
-    if (currentTime - LastSeedCraftingTime >= SeedCraftingTime) {
-        Rewardlist.Push("SeedCrafting")   
-    }
-    if (currentTime - LastCookingTime >= CookingTime) {
-        Rewardlist.Push("Cooking")
-    }
-
-    return Rewardlist
+    return false
 }
 
-; Calls RewardChecker -> RewardChecked functions to see if we are able to run those things
+
+ConvertSeconds(hours,minutes,seconds){
+    return (hours * 3600) + (minutes * 60) + seconds
+}
+
+
+LastShopTime := nowUnix()
+
+
+Shops := {
+    Seeds: {
+        name: "Seeds",
+        lastTime: LastShopTime,
+        duration: ConvertSeconds(0, 5, 0),
+        buy: (self) => BuySeeds()
+    },
+    Gears: {
+        name: "Gears",
+        lastTime: LastShopTime,
+        duration: ConvertSeconds(0, 5, 0),
+        buy: () => BuyGears()
+    },
+    Crates: {
+        name: "Crates",
+        lastTime: LastShopTime,
+        duration: ConvertSeconds(0, 5, 0),
+        buy: (self) => BuyCrates()
+    }
+
+}
+
+
+
+
+
+
 RewardInterupt() {
+    global Shops
 
-    variable := RewardChecker()
+    Rewardlist := []
+    currentTime := nowUnix()
 
-    for (k, v in variable) {
-        ToolTip("")
-        ActivateRoblox()
-        if (v = "Seeds") {
-            BuySeeds()
-        }
-        if (v = "Gears") {
-            BuyGears()
-        }
-        if (v = "Eggs") {
-            BuyEggs()
-        }
-        if (v = "EasterSeed"){
-            BuyEasterSeed()
-        }
-        ; if (v = "fallCosmetics"){
-        ;     BuyfallCosmetics()
-        ; }
-        if (v = "CreepyCritters"){
-            BuyCreepyCritters()
-        }
-        if (v = "GearCrafting") {
-            GearCraft()
-            Sleep(2000)
-            global LastGearCraftingTime
-            LastGearCraftingTime := nowUnix()
-        }
-        if (v = "SeedCrafting") {
-            SeedCraft()
-            Sleep(2000)
-            global LastSeedCraftingTime
-            LastSeedCraftingTime := nowUnix()
-        }
-        if (v = "TravelingMerchant") {
-            BuyMerchant()
-        }
-        if (v = "Cosmetics") {
-            BuyCosmetics()
-        }
-        if (v = "Cooking") {
-            CookingEvent()
-            Sleep(2000)
-            global LastCookingTime
-            LastCookingTime := nowUnix()
+    for _, shop in Shops.OwnProps() {
+        if (currentTime - shop.lastTime >= shop.duration) {
+            shop.lastTime := currentTime
+            Rewardlist.Push(shop.name)
+            shop.buy()
         }
     }
-    
-    if (variable.Length > 0) {
-        Clickbutton("Garden")
+
+    if (Rewardlist.Length > 0) {
+        Clickbutton_Tabs("Garden")
         relativeMouseMove(0.5, 0.5)
         return 1
     }
+
+    return 0
+    
 }
 
 

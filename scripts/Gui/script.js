@@ -2,7 +2,7 @@ let cachedData = null;
 
 async function fetchAllItems() {
   if (!cachedData) {
-    const response = await fetch('https://raw.githubusercontent.com/epicisgood/GAG-Updater/refs/heads/main/items.json');
+    const response = await fetch('https://raw.githubusercontent.com/epicisgood/GAG-2-Updater/refs/heads/main/items.json');
     cachedData = await response.json();
   }
   return cachedData;
@@ -26,11 +26,6 @@ async function onSaveClick() {
     url: document.getElementById('url').value,
     discordID: document.getElementById('discordID').value,
     VipLink: document.getElementById('VipLink').value,
-    TravelingMerchant: +document.getElementById('TravelingMerchant').checked,
-    Cosmetics: +document.getElementById('Cosmetics').checked,
-    CookingEvent: +document.getElementById('CookingEvent').checked,
-    SearchList: document.getElementById('SearchList').value,
-    CookingTime: document.getElementById('CookingTime').value,
     ThemeToggle: +document.getElementById('ThemeToggle').checked,
 
     dynamicItems: {} 
@@ -62,12 +57,7 @@ function applySettings(payload) {
     'url': settings.url,
     'discordID': settings.discordID,
     'VipLink': settings.VipLink,
-    'SearchList': settings.SearchList,
-    'CookingTime': settings.CookingTime,
     'ThemeToggle': !!+settings.ThemeToggle,
-    'Cosmetics': !!+settings.Cosmetics,
-    'TravelingMerchant': !!+settings.TravelingMerchant,
-    'CookingEvent': !!+settings.CookingEvent
   };
 
   Object.entries(fieldMap).forEach(([id, value]) => {
@@ -95,13 +85,13 @@ function applySettings(payload) {
 
 
 const CATEGORIES = [
-  "Seeds", "Gears", "Eggs", "GearCrafting", "SeedCrafting", "EasterSeed", "CreepyCritters"
+  "Seeds", "Gears", "Crates"
 ];
 
 
 const sanitizeId = (str) => str.replace(/\s+/g, '');
 
-const getInputType = (category) => ["GearCrafting", "SeedCrafting"].includes(category) ? "radio" : "checkbox";
+const getInputType = (category) => ["PlaceHolder_For_Radio_Options_I_Guess"].includes(category) ? "radio" : "checkbox";
 
 
 async function buildDynamicItemGrids() {
@@ -115,7 +105,12 @@ async function buildDynamicItemGrids() {
 
     rawItems.forEach(item => {
       const sanitizedName = sanitizeId(item.name);
-      const imgPath = item.image || `../../images/${category}/${item.name}.webp`;
+      let imgPath;
+      if (item.image != "") {
+        imgPath = item.image;
+      } else {
+        imgPath = `../../images/${category}/${item.name}.webp`;
+      }
 
       const boxCard = document.createElement("div");
       boxCard.className = "reward-box";

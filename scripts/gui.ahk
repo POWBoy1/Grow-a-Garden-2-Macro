@@ -29,7 +29,6 @@ MyWindow.AddHostObjectToScript("ReadSettings", { func: SendSettings })
 MyWindow.Show("w600 h400")
 
 
-
 F1::{
     Start
 }
@@ -45,7 +44,7 @@ Alt & S:: {
 Start(*) {
 
     PlayerStatus("Starting " version " Grow A Garden 2 Macro by epic", "0xFFFF00", , false, , false)
-    OnError (e, mode) => (mode = "return") * (-1)
+    ; OnError (e, mode) => (mode = "return") * (-1)
     Loop {
         MainLoop() 
     }
@@ -119,8 +118,8 @@ WebButtonClickEvent(button) {
 
 
 
-global CORE_SETTINGS := ["url", "discordID", "VipLink", "Cosmetics", "TravelingMerchant", "CookingEvent", "SearchList", "CookingTime", "ThemeToggle"]
-global CATEGORIES    := ["Seeds", "Gears", "Eggs", "GearCrafting", "SeedCrafting", "EasterSeed", "CreepyCritters"]
+global CORE_SETTINGS := ["url", "discordID", "VipLink", "ThemeToggle"]
+global CATEGORIES    := ["Seeds", "Gears", "Crates"]
 
 SaveSettings(settingsJson) {
     settings := JSON.Parse(settingsJson)
@@ -153,15 +152,10 @@ SendSettings() {
         IniWrite("",  settingsFile, "Settings", "url")
         IniWrite("",  settingsFile, "Settings", "discordID")
         IniWrite("",  settingsFile, "Settings", "VipLink")
-        IniWrite("0", settingsFile, "Settings", "Cosmetics")
-        IniWrite("1", settingsFile, "Settings", "TravelingMerchant")
-        IniWrite("0", settingsFile, "Settings", "CookingEvent")
-        IniWrite("",  settingsFile, "Settings", "SearchList")
-        IniWrite("",  settingsFile, "Settings", "CookingTime")
         IniWrite("0", settingsFile, "Settings", "ThemeToggle")
 
         for category in CATEGORIES {
-            defaultState := (category == "Seeds" || category == "Gears" || category == "Eggs") ? "1" : "0"
+            defaultState := (category == "Seeds" || category == "Gears" || category == "Crates") ? "1" : "0"
             items := getItems(category)
             items.Push(category)
             
@@ -178,10 +172,11 @@ SendSettings() {
     }
 
     SettingsJson.dynamicItems := {}
+    MsgBox(JSON.stringify(CATEGORIES))
     for category in CATEGORIES {
         SettingsJson.dynamicItems.%category% := Map()
-        
-        defaultVal := (category == "Seeds" || category == "Gears" || category == "Eggs") ? "1" : "0"
+        MsgBox(category)
+        defaultVal := (category == "Seeds" || category == "Gears" || category == "Crates") ? "1" : "0"
         items := getItems(category)
         items.Push(category)
 
@@ -190,8 +185,9 @@ SendSettings() {
             val := IniRead(settingsFile, category, sanitizedKey, defaultVal)
             SettingsJson.dynamicItems.%category%[item] := val
         }
+        ; MsgBox(JSON.stringify(items))
     }
-
+    MsgBox(JSON.stringify(SettingsJson))
     MyWindow.PostWebMessageAsJson(JSON.stringify(SettingsJson))
 }
 
