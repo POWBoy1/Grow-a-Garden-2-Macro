@@ -44,7 +44,6 @@ Shops := {
 
 
 
-
 RewardInterupt() {
     global Shops
 
@@ -54,7 +53,7 @@ RewardInterupt() {
     for _, shop in Shops.OwnProps() {
         if (currentTime - shop.lastTime >= shop.duration) {
             shop.lastTime := currentTime
-            Rewardlist.Push(shop.name)
+            Rewardlist.Push(1)
             shop.buy()
         }
     }
