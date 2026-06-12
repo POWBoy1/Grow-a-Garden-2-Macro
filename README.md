@@ -14,7 +14,7 @@ A macro for **Grow A Garden 2** that automatically buys your selected seeds, gea
 
 > **Recall Wrench** is in the **first hotbar slot** but macro auto equips it
 
-<img width="450" height="500" alt="image" src="https://github.com/user-attachments/assets/9331c1db-9e93-4239-88a7-6e7bdc17c1d0" />
+<img width="600" height="400" alt="image" src="https://github.com/user-attachments/assets/b16adfff-afb8-48b1-8c41-5c774902263b" />
 
 
 ---
