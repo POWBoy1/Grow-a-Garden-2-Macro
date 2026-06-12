@@ -754,10 +754,8 @@ MainLoop() {
     loop {
         initShops()
         
-        if ((If_Minute(2) || If_Minute(7)) && A_Sec == 20) {
+        if (If_Minute(0) || If_Minute(5)) {
             CameraCorrection()
-        }
-        if (If_Minute(3) || If_Minute(8)) {
             RewardInterupt()
         }
 
