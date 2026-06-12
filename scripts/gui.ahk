@@ -172,10 +172,8 @@ SendSettings() {
     }
 
     SettingsJson.dynamicItems := {}
-    MsgBox(JSON.stringify(CATEGORIES))
     for category in CATEGORIES {
         SettingsJson.dynamicItems.%category% := Map()
-        MsgBox(category)
         defaultVal := (category == "Seeds" || category == "Gears" || category == "Crates") ? "1" : "0"
         items := getItems(category)
         items.Push(category)
@@ -187,7 +185,6 @@ SendSettings() {
         }
         ; MsgBox(JSON.stringify(items))
     }
-    MsgBox(JSON.stringify(SettingsJson))
     MyWindow.PostWebMessageAsJson(JSON.stringify(SettingsJson))
 }
 
