@@ -161,8 +161,8 @@ CloseBrowserTab(){
     }
 }
 
+
 CheckDisconnnect(){
-    VipLink := IniRead(settingsFile, "Settings", "VipLink")
     hwnd := GetRobloxHWND()
     GetRobloxClientPos()
     pBMScreen := Gdip_BitmapFromScreen(windowX "|" windowY + 30 "|" windowWidth "|" windowHeight - 30)
@@ -174,6 +174,7 @@ CheckDisconnnect(){
 
         linkCode := ""
         shareCode := ""
+        VipLink := IniRead(settingsFile, "Settings", "VipLink","")
 
         if RegExMatch(VipLink, "privateServerLinkCode=(\d+)", &match)
             linkCode := match[1]
@@ -647,6 +648,10 @@ BuySeeds(){
         return
     }
     loop 3 {
+        if (Disconnect()){
+            Sleep(1500)
+            CameraCorrection()
+        }
         PlayerStatus("Going to buy Seeds!", "0x22e6a8",,false,,false)
         relativeMouseMove(0.5, 0.5)
         Sleep(500)
@@ -674,6 +679,10 @@ BuyGears(){
     }
     loop 3 {
         PlayerStatus("Going to buy Gears!", "0x22e6a8",,false,,false)
+        if (Disconnect()){
+            Sleep(1500)
+            CameraCorrection()
+        }
         ActivateRoblox()
         Clickbutton_Tabs("Seeds")
         Sleep(1000)
@@ -702,6 +711,10 @@ BuyCrates(){
     }
     crateitems := getItems("Crates")
     loop 3 {
+        if (Disconnect()){
+            Sleep(1500)
+            CameraCorrection()
+        }
         PlayerStatus("Going to buy Crates!", "0x22e6a8",,false,,false)
         ActivateRoblox()
         Clickbutton_Tabs("Seeds")
