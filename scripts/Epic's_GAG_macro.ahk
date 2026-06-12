@@ -664,9 +664,6 @@ BuySeeds(){
     CloseRoblox()
 }
 
-F4::{
-    BuyCrates()
-}
 
 
 BuyGears(){
@@ -708,7 +705,7 @@ BuyCrates(){
         ActivateRoblox()
         Clickbutton_Tabs("Seeds")
         Sleep(1000)
-        Walk(1700,Skey)
+        Walk(2200,Skey)
         Walk(400,Akey)
         Sleep(1000)
         Send("{" Ekey "}")
