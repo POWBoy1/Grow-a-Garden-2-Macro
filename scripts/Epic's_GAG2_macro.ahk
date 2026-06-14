@@ -1,4 +1,4 @@
-﻿#Requires AutoHotkey v2.0
+#Requires AutoHotkey v2.0
 #SingleInstance Force
 #Warn VarUnset, Off
 SetWorkingDir A_ScriptDir . "\.."
@@ -498,7 +498,7 @@ CheckStock(index, list){
             x := Cords[1] + captureX - 5
             y := Cords[2] + captureY - 10
             MouseMove(x, y)
-            SpamClick(5)
+            SpamClick(15)
             Gdip_DisposeImage(pBMScreen)
             Sleep(25)
         } else {
