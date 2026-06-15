@@ -444,9 +444,7 @@ RedX_Shop_Button(clickit := 1){
 
 
 
-F4::{
-    BuySeeds()
-}
+
 Clickbutton_Tabs(button, clickit := 1){
     hwnd := GetRobloxHWND()
     GetRobloxClientPos(hwnd)    
