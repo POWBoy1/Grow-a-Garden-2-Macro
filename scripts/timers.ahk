@@ -18,12 +18,13 @@ ConvertSeconds(hours,minutes,seconds){
 LastShopTime := nowUnix()
 
 
+; The highest object will be the last item in loop.
 Shops := {
-    Seeds: {
-        name: "Seeds",
+    Crates: {
+        name: "Crates",
         lastTime: LastShopTime,
         duration: ConvertSeconds(0, 5, 0),
-        buy: (self) => BuySeeds()
+        buy: (self) => BuyCrates()
     },
     Gears: {
         name: "Gears",
@@ -31,11 +32,11 @@ Shops := {
         duration: ConvertSeconds(0, 5, 0),
         buy: (self) => BuyGears()
     },
-    Crates: {
-        name: "Crates",
+    Seeds: {
+        name: "Seeds",
         lastTime: LastShopTime,
         duration: ConvertSeconds(0, 5, 0),
-        buy: (self) => BuyCrates()
+        buy: (self) => BuySeeds()
     }
 
 }

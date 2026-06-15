@@ -1,4 +1,4 @@
-#Requires AutoHotkey v2.0
+﻿#Requires AutoHotkey v2.0
 #SingleInstance Force
 #Warn VarUnset, Off
 SetWorkingDir A_ScriptDir . "\.."
@@ -443,6 +443,10 @@ RedX_Shop_Button(clickit := 1){
 }
 
 
+
+F4::{
+    BuySeeds()
+}
 Clickbutton_Tabs(button, clickit := 1){
     hwnd := GetRobloxHWND()
     GetRobloxClientPos(hwnd)    
@@ -482,7 +486,7 @@ CheckStock(index, list){
     captureWidth := 150
     captureHeight := Integer(windowHeight * 0.5) + 100
 
-    captureX := Integer(windowX + (windowWidth * 0.375))
+    captureX := Integer(windowX + (windowWidth * 0.4))
     captureY := Integer(windowY + (windowHeight * 0.25))
 
     pBMScreen := Gdip_BitmapFromScreen(captureX "|" captureY "|" captureWidth "|" captureHeight)
@@ -493,14 +497,14 @@ CheckStock(index, list){
 
     loop {
         pBMScreen := Gdip_BitmapFromScreen(captureX "|" captureY "|" captureWidth "|" captureHeight)
-        If (Gdip_ImageSearch(pBMScreen, bitmaps["GreenStock"], &OutputList, , , , , 3,,3) = 1 || Gdip_ImageSearch(pBMScreen, bitmaps["GreenStock2"], &OutputList , , , , , 3,,3) = 1 || Gdip_ImageSearch(pBMScreen, bitmaps["GreenStock3"], &OutputList , , , , , 3,,20) = 1) {
+        If (Gdip_ImageSearch(pBMScreen, bitmaps["GreenStock"], &OutputList, , , , , 3,,3) = 1 || Gdip_ImageSearch(pBMScreen, bitmaps["GreenStock2"], &OutputList , , , , , 3,,3) = 1) {
             Cords := StrSplit(OutputList, ",")
             x := Cords[1] + captureX - 5
             y := Cords[2] + captureY - 10
             MouseMove(x, y)
             SpamClick(15)
             Gdip_DisposeImage(pBMScreen)
-            Sleep(25)
+            Sleep(150)
         } else {
             Gdip_DisposeImage(pBMScreen)
             PlayerStatus("Bought " list[index] "s!", "0x22e6a8",,false)
@@ -765,12 +769,14 @@ MainLoop() {
     loop {
         initShops()
         
-        if (If_Minute(0) || If_Minute(5)) {
+        if (If_Minute(4) || If_Minute(9) && A_Sec == 30) {
             CameraCorrection()
+        }
+        if (If_Minute(0) || If_Minute(5)) {
             RewardInterupt()
         }
 
-        if (If_Minute(30)){
+        if (If_Minute(3)){
             CloseClutter()
             Close_Leaderboard()
             if (Disconnect()){
