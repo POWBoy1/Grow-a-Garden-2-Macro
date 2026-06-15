@@ -759,7 +759,6 @@ Disconnect(){
 }
 
 MainLoop() {
-
     if (GetRobloxHWND()){
         ResizeRoblox()
     }
@@ -768,8 +767,12 @@ MainLoop() {
         Sleep(1500)
         return
     }
-
-    MyWindow.Destroy()
+    try {
+        global MyWindow
+        MyWindow.Destroy()
+    } catch {
+        Sleep(10)
+    }
     CloseChat() 
     Close_Leaderboard()
     CameraCorrection()
