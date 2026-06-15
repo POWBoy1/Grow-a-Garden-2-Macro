@@ -355,8 +355,8 @@ checkCamera(Camera_mode){
 
 
 ZoomAlign(){
-    ActivateRoblox()
     relativeMouseMove(0.5,0.5)
+    Click
     Loop 40 {
         Send("{WheelUp}")
         Sleep 20
@@ -376,6 +376,8 @@ ZoomAlign(){
 CameraCorrection(){
     Disconnect()
     Clickbutton_Tabs("Garden")
+    Sleep(1000)
+    Walk(500,Skey)
     ZoomAlign()
     Click("Right", "Down")
     Sleep(200)
@@ -386,6 +388,7 @@ CameraCorrection(){
     Click("Right", "Up")
     Sleep(250)
     Clickbutton_Tabs("Seeds")
+    Sleep(500)
 
 }
 
