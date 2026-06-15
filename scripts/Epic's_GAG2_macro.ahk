@@ -380,7 +380,7 @@ CameraCorrection(){
     Sleep(250)
     Clickbutton_Tabs("Garden")
     Sleep(1000)
-    Walk(500,Skey)
+    Walk(500,Akey)
     ZoomAlign()
     Click("Right", "Down")
     Sleep(200)
@@ -779,7 +779,7 @@ MainLoop() {
     loop {
         initShops()
         
-        if (If_Minute(4) || If_Minute(9) && A_Sec == 30) {
+        if ((If_Minute(4) || If_Minute(9)) && A_Sec == 30) {
             CameraCorrection()
         }
         if (If_Minute(0) || If_Minute(5)) {
