@@ -356,6 +356,7 @@ checkCamera(Camera_mode){
 
 ZoomAlign(){
     relativeMouseMove(0.5,0.5)
+    Sleep(200)
     Click
     Loop 40 {
         Send("{WheelUp}")
@@ -375,6 +376,8 @@ ZoomAlign(){
 
 CameraCorrection(){
     Disconnect()
+    CloseClutter()
+    Sleep(250)
     Clickbutton_Tabs("Garden")
     Sleep(1000)
     Walk(500,Skey)
