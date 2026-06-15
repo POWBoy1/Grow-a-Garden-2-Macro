@@ -355,8 +355,8 @@ checkCamera(Camera_mode){
 
 
 ZoomAlign(){
+    ActivateRoblox()
     relativeMouseMove(0.5,0.5)
-    Click
     Loop 40 {
         Send("{WheelUp}")
         Sleep 20
