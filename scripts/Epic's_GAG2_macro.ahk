@@ -389,7 +389,7 @@ CameraCorrection(){
     Sleep(250)
     Clickbutton_Tabs("Seeds")
     Sleep(500)
-
+    PlayerStatus("Finished Aligning!","0x2260e6",,false,,false)
 }
 
 SpamClick(amount){
