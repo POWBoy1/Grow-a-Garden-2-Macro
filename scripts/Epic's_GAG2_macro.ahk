@@ -473,9 +473,6 @@ Clickbutton_Tabs(button, clickit := 1){
 }
 
 
-F4::{
-    Clickbutton_Tabs("Seeds")
-}
 
 
 
