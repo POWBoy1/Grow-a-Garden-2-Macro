@@ -672,6 +672,9 @@ BuySeeds(){
     }
     PlayerStatus("Failed to buy seeds 3 times, CLOSING ROBLOX!", "0x001a12")
     CloseRoblox()
+    Sleep(1000)
+    Disconnect()
+    CameraCorrection()
 }
 
 
@@ -706,6 +709,10 @@ BuyGears(){
     CloseClutter()
     Sleep(1500)
     PlayerStatus("Failed to open gear shop 3 times.", "0x001a12")
+    CloseRoblox()
+    Sleep(1000)
+    Disconnect()
+    CameraCorrection()
 }
 
 
