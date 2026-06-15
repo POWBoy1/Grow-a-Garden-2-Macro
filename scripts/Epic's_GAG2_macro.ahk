@@ -453,7 +453,7 @@ Clickbutton_Tabs(button, clickit := 1){
     capY := windowY + 30
     capW := windowWidth * 0.5
     capH := 100
-    varation := 10
+    varation := 20
     
     pBMScreen := Gdip_BitmapFromScreen(capX "|" capY "|" capW "|" capH)
     if (Gdip_ImageSearch(pBMScreen, bitmaps[button], &OutputList, , , , , varation) = 1) {
@@ -473,7 +473,9 @@ Clickbutton_Tabs(button, clickit := 1){
 }
 
 
-
+F4::{
+    Clickbutton_Tabs("Seeds")
+}
 
 
 
