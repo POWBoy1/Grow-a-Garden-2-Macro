@@ -6,7 +6,7 @@
 ![GitHub License](https://img.shields.io/github/license/epicisgood/Grow-a-Garden-2-Macro)
 
 
-A macro for **Grow A Garden 2** that automatically buys your selected seeds, gear, and crafting benches and more!
+A macro for **Grow A Garden 2** that automatically buys your selected seeds, gears, and props and more!
 
 ✅ Supports **auto-reconnect** and sends **images via Discord webhook**.
 
