@@ -622,7 +622,20 @@ getItems(item){
             request.Open("GET", "https://raw.githubusercontent.com/epicisgood/GAG-2-Updater/refs/heads/main/items.json", true)
             request.Send()
             request.WaitForResponse()
+
+            if (request.Status != 200 || request.ResponseText = "") {
+                PlayerStatus("Failed to fetch items (status " request.Status ")", "0xFF0000",,true,,false)
+                return []
+            }
+
             fileContent := JSON.parse(request.ResponseText)
+            if !IsObject(fileContent) {
+                PlayerStatus("Unable to parse JSON.", "0xFF0000",,true,,false)
+                PlayerStatus(JSON.stringify(fileContent), "0xFF0000",,true,,false)
+                fileContent := ""
+                return []
+            }
+
             global MyWindow
             MyWindow.ExecuteScriptAsync("document.querySelector('#random-message').textContent = '" fileContent["message"] "'")
             
@@ -630,6 +643,15 @@ getItems(item){
             PlayerStatus("This is a very rare error! " e.Message, "0xFF0000",,true,,false)
         }
     }
+
+    if Type(fileContent[item]) != "Array" {
+        PlayerStatus("Type: " Type(fileContent), "0xFF0000",,,,false)
+        PlayerStatus("Please contact _epic. for this error. " JSON.stringify(fileContent[item]), "0xFF0000",,true,,false)
+        fileContent := ""
+        return []
+    }
+    
+    ; Error: This value of type "String" has no property named "__Item". Bug should be fixed hopefully....
     names := []
     for itemObj in fileContent[item] {
         names.Push(itemObj["name"])
@@ -814,10 +836,16 @@ MainLoop() {
 
 ShowToolTip(){
     global Shops
+    if !IsSet(Shops) || !IsObject(Shops) {
+        PlayerStatus("Ping _epic. with error. Type: " Type(Shops) ", IsSet: "  IsSet(shop), "0xFF0000",,true,,false)
+        PlayerStatus(JSON.stringify(Shops),"0xFF0000",,true,,false)
+        return 
+    }
 
     currentTime := nowUnix()
     tooltipText := ""
 
+    ; Error: This Value of type "String" has no property named "__Item".
     for _, shop in Shops.OwnProps() {
         enabled := IniRead(settingsFile, shop.name, shop.name) + 0
         if (!enabled)
