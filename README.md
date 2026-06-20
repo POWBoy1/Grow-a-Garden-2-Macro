@@ -12,9 +12,7 @@ A macro for **Grow A Garden 2** that automatically buys your selected seeds, gea
 
 ✅ The macro does NOT require **UI navigation** and the macro works using your **cursor**.
 
-
-<img width="600" height="400" alt="image" src="https://github.com/user-attachments/assets/b16adfff-afb8-48b1-8c41-5c774902263b" />
-
+<img width="600" height="400" alt="image" src="https://github.com/user-attachments/assets/65c64112-5e05-4862-87b5-4894dd7bcf1a" />
 
 ---
 
