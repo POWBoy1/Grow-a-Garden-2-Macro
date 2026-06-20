@@ -122,18 +122,20 @@ relativeMouseMove(relx, rely) {
 
 
 
-Walk(studs, MoveKey1, MoveKey2:=0) {
-	Send "{" MoveKey1  " down}" (MoveKey2 ? "{" MoveKey2  " down}" : "")
-	Sleep studs
-	Send "{" MoveKey1  " up}" (MoveKey2 ? "{" MoveKey2  " up}" : "")
-}
 ; Walk(studs, MoveKey1, MoveKey2:=0) {
-; 	speed := 0.022
-; 	sleepTime := studs / speed
 ; 	Send "{" MoveKey1  " down}" (MoveKey2 ? "{" MoveKey2  " down}" : "")
-; 	Sleep sleepTime
+; 	Sleep studs
 ; 	Send "{" MoveKey1  " up}" (MoveKey2 ? "{" MoveKey2  " up}" : "")
 ; }
+
+Walk_Studs(studs, MoveKey1, MoveKey2:=0) {
+	currentWalkSpeed := Integer(IniRead(settingsFile,"Settings", "MoveSpeed", 16))
+	sleepTime := (studs / currentWalkSpeed) * 1000
+	Send "{" MoveKey1  " down}" (MoveKey2 ? "{" MoveKey2  " down}" : "")
+	HyperSleep sleepTime
+	Send "{" MoveKey1  " up}" (MoveKey2 ? "{" MoveKey2  " up}" : "")
+}
+
 
 CloseBrowserTab(){
     for hwnd in WinGetList(,, "Program Manager")
@@ -377,16 +379,16 @@ ZoomAlign(){
 CameraCorrection(){
     Disconnect()
     CloseClutter()
-    Sleep(250)
-    Clickbutton_Tabs("Seeds")
-    Sleep(250)
-    Clickbutton_Tabs("Garden")
-    Sleep(250)
-    Clickbutton_Tabs("Seeds")
-    Sleep(250)
-    Clickbutton_Tabs("Garden")
+
+    loop 3 {
+        Sleep(250)
+        Clickbutton_Tabs("Seeds")
+        Sleep(250)
+        Clickbutton_Tabs("Garden")
+    }
+
     Sleep(1000)
-    Walk(500,Akey,Skey)
+    Walk_Studs(12, AKey, SKey)
     ZoomAlign()
     Click("Right", "Down")
     Sleep(200)
@@ -700,8 +702,8 @@ BuyGears(){
         ActivateRoblox()
         Clickbutton_Tabs("Seeds")
         Sleep(1000)
-        Walk(600,Skey)
-        Walk(850,Akey)
+        Walk_Studs(10, Skey)
+        Walk_Studs(15, Akey)
         Sleep(1000)
         Send("{" Ekey "}")
         if !DetectShop("gear"){
@@ -737,8 +739,8 @@ BuyCrates(){
         ActivateRoblox()
         Clickbutton_Tabs("Seeds")
         Sleep(1000)
-        Walk(2200,Skey)
-        Walk(400,Akey)
+        Walk_Studs(35, Skey)
+        Walk_Studs(7, Akey)
         Sleep(1000)
         Send("{" Ekey "}")
         if !DetectShop("crate"){
@@ -841,9 +843,6 @@ F2::
     ; Gdip_DisposeImage(pBMScreen)
     PauseMacro()
 }
-
-
-
 
 
 

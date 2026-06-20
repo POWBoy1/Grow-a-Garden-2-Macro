@@ -26,6 +26,7 @@ async function onSaveClick() {
     url: document.getElementById('url').value,
     discordID: document.getElementById('discordID').value,
     VipLink: document.getElementById('VipLink').value,
+    MoveSpeed: document.getElementById('MoveSpeed').value,
     ThemeToggle: +document.getElementById('ThemeToggle').checked,
 
     dynamicItems: {} 
@@ -57,6 +58,7 @@ function applySettings(payload) {
     'url': settings.url,
     'discordID': settings.discordID,
     'VipLink': settings.VipLink,
+    'MoveSpeed': settings.MoveSpeed,
     'ThemeToggle': !!+settings.ThemeToggle,
   };
 
@@ -78,6 +80,8 @@ function applySettings(payload) {
   }
 
   handleThemeChange();
+
+  onSaveClick();
 
 }
 
@@ -145,6 +149,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       this.classList.add('tab-button-active');
     });
   });
+
 
   document.querySelectorAll(".SelectAll").forEach(selectAllCheckbox => {
     selectAllCheckbox.addEventListener("change", () => {

@@ -118,7 +118,7 @@ WebButtonClickEvent(button) {
 
 
 
-global CORE_SETTINGS := ["url", "discordID", "VipLink", "ThemeToggle"]
+global CORE_SETTINGS := ["url", "discordID", "VipLink", "MoveSpeed","ThemeToggle"]
 global CATEGORIES    := ["Seeds", "Gears", "Crates"]
 
 SaveSettings(settingsJson) {
@@ -152,6 +152,7 @@ SendSettings() {
         IniWrite("",  settingsFile, "Settings", "url")
         IniWrite("",  settingsFile, "Settings", "discordID")
         IniWrite("",  settingsFile, "Settings", "VipLink")
+        IniWrite("16",  settingsFile, "Settings", "MoveSpeed")
         IniWrite("0", settingsFile, "Settings", "ThemeToggle")
 
         for category in CATEGORIES {
