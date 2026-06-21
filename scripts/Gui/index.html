@@ -111,6 +111,7 @@
 
     <div id="Event tab" class="tab">
       <div class="rewards-grid">
+        <button class="button-style" onclick="ahk.ButtonClick.Func('AutoMail')">Launch Auto Mailer</button>
 
       </div>
     </div>
@@ -148,6 +149,17 @@
             </div>
           </div>
           <div class="reward-options raw-input-field"><input type="text" id="VipLink" placeholder="https://www.roblox.com/games/..."></div>
+        </div>
+
+        <div class="reward-box">
+          <div class="reward-header">
+            <span>MoveSpeed:</span>
+            <div class="info-tooltip-holder">
+              <svg viewBox="0 0 24 24" class="info-svg"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+              <div class="tooltip-box">The default movespeed is 16. Do the math for your bunnies increasing walkspeed.</div>
+            </div>
+          </div>
+          <div class="reward-options raw-input-field"><input type="text" id="MoveSpeed" placeholder="16"></div>
         </div>
 
         <div class="reward-box">

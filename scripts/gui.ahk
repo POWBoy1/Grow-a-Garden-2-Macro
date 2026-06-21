@@ -113,12 +113,17 @@ WebButtonClickEvent(button) {
 			Send("{F2}")
         case "Stop":
 			Send("{F3}")
+        case "AutoMail":
+            exe_path32 := A_AhkPath
+            run '"' exe_path32 '" /script "' A_WorkingDir '/scripts/AutoMail/AutoMailer.ahk"'
+            StopMacro()
+            ExitApp()
 	}
 }
 
 
 
-global CORE_SETTINGS := ["url", "discordID", "VipLink", "ThemeToggle"]
+global CORE_SETTINGS := ["url", "discordID", "VipLink", "MoveSpeed","ThemeToggle"]
 global CATEGORIES    := ["Seeds", "Gears", "Crates"]
 
 SaveSettings(settingsJson) {
@@ -152,6 +157,7 @@ SendSettings() {
         IniWrite("",  settingsFile, "Settings", "url")
         IniWrite("",  settingsFile, "Settings", "discordID")
         IniWrite("",  settingsFile, "Settings", "VipLink")
+        IniWrite("16",  settingsFile, "Settings", "MoveSpeed")
         IniWrite("0", settingsFile, "Settings", "ThemeToggle")
 
         for category in CATEGORIES {
@@ -169,6 +175,11 @@ SendSettings() {
     SettingsJson := {}
     for key in CORE_SETTINGS {
         SettingsJson.%key% := IniRead(settingsFile, "Settings", key, "")
+
+        if (key == "MoveSpeed") {
+            SettingsJson.%key% := IniRead(settingsFile, "Settings", key, 16)
+        }
+        
     }
 
     SettingsJson.dynamicItems := {}

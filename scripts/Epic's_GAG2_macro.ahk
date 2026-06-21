@@ -122,18 +122,20 @@ relativeMouseMove(relx, rely) {
 
 
 
-Walk(studs, MoveKey1, MoveKey2:=0) {
-	Send "{" MoveKey1  " down}" (MoveKey2 ? "{" MoveKey2  " down}" : "")
-	Sleep studs
-	Send "{" MoveKey1  " up}" (MoveKey2 ? "{" MoveKey2  " up}" : "")
-}
 ; Walk(studs, MoveKey1, MoveKey2:=0) {
-; 	speed := 0.022
-; 	sleepTime := studs / speed
 ; 	Send "{" MoveKey1  " down}" (MoveKey2 ? "{" MoveKey2  " down}" : "")
-; 	Sleep sleepTime
+; 	Sleep studs
 ; 	Send "{" MoveKey1  " up}" (MoveKey2 ? "{" MoveKey2  " up}" : "")
 ; }
+
+Walk_Studs(studs, MoveKey1, MoveKey2:=0) {
+	currentWalkSpeed := Integer(IniRead(settingsFile,"Settings", "MoveSpeed", 16))
+	sleepTime := (studs / currentWalkSpeed) * 1000
+	Send "{" MoveKey1  " down}" (MoveKey2 ? "{" MoveKey2  " down}" : "")
+	HyperSleep sleepTime
+	Send "{" MoveKey1  " up}" (MoveKey2 ? "{" MoveKey2  " up}" : "")
+}
+
 
 CloseBrowserTab(){
     for hwnd in WinGetList(,, "Program Manager")
@@ -377,16 +379,16 @@ ZoomAlign(){
 CameraCorrection(){
     Disconnect()
     CloseClutter()
-    Sleep(250)
-    Clickbutton_Tabs("Seeds")
-    Sleep(250)
-    Clickbutton_Tabs("Garden")
-    Sleep(250)
-    Clickbutton_Tabs("Seeds")
-    Sleep(250)
-    Clickbutton_Tabs("Garden")
+
+    loop 3 {
+        Sleep(250)
+        Clickbutton_Tabs("Seeds")
+        Sleep(250)
+        Clickbutton_Tabs("Garden")
+    }
+
     Sleep(1000)
-    Walk(500,Akey,Skey)
+    Walk_Studs(12, AKey, SKey)
     ZoomAlign()
     Click("Right", "Down")
     Sleep(200)
@@ -620,7 +622,20 @@ getItems(item){
             request.Open("GET", "https://raw.githubusercontent.com/epicisgood/GAG-2-Updater/refs/heads/main/items.json", true)
             request.Send()
             request.WaitForResponse()
+
+            if (request.Status != 200 || request.ResponseText = "") {
+                PlayerStatus("Failed to fetch items (status " request.Status ")", "0xFF0000",,true,,false)
+                return []
+            }
+
             fileContent := JSON.parse(request.ResponseText)
+            if !IsObject(fileContent) {
+                PlayerStatus("Unable to parse JSON.", "0xFF0000",,true,,false)
+                PlayerStatus(JSON.stringify(fileContent), "0xFF0000",,true,,false)
+                fileContent := ""
+                return []
+            }
+
             global MyWindow
             MyWindow.ExecuteScriptAsync("document.querySelector('#random-message').textContent = '" fileContent["message"] "'")
             
@@ -628,6 +643,15 @@ getItems(item){
             PlayerStatus("This is a very rare error! " e.Message, "0xFF0000",,true,,false)
         }
     }
+
+    if Type(fileContent[item]) != "Array" {
+        PlayerStatus("Type: " Type(fileContent), "0xFF0000",,,,false)
+        PlayerStatus("Please contact _epic. for this error. " JSON.stringify(fileContent[item]), "0xFF0000",,true,,false)
+        fileContent := ""
+        return []
+    }
+    
+    ; Error: This value of type "String" has no property named "__Item". Bug should be fixed hopefully....
     names := []
     for itemObj in fileContent[item] {
         names.Push(itemObj["name"])
@@ -700,8 +724,8 @@ BuyGears(){
         ActivateRoblox()
         Clickbutton_Tabs("Seeds")
         Sleep(1000)
-        Walk(600,Skey)
-        Walk(850,Akey)
+        Walk_Studs(10, Skey)
+        Walk_Studs(15, Akey)
         Sleep(1000)
         Send("{" Ekey "}")
         if !DetectShop("gear"){
@@ -737,8 +761,8 @@ BuyCrates(){
         ActivateRoblox()
         Clickbutton_Tabs("Seeds")
         Sleep(1000)
-        Walk(2200,Skey)
-        Walk(400,Akey)
+        Walk_Studs(35, Skey)
+        Walk_Studs(7, Akey)
         Sleep(1000)
         Send("{" Ekey "}")
         if !DetectShop("crate"){
@@ -777,7 +801,7 @@ MainLoop() {
     } catch {
         Sleep(10)
     }
-    CloseChat() 
+    CloseChat()
     Close_Leaderboard()
     CameraCorrection()
     BuySeeds()
@@ -812,10 +836,16 @@ MainLoop() {
 
 ShowToolTip(){
     global Shops
+    if !IsSet(Shops) || !IsObject(Shops) {
+        PlayerStatus("Ping _epic. with error. Type: " Type(Shops) ", IsSet: "  IsSet(shop), "0xFF0000",,true,,false)
+        PlayerStatus(JSON.stringify(Shops),"0xFF0000",,true,,false)
+        return 
+    }
 
     currentTime := nowUnix()
     tooltipText := ""
 
+    ; Error: This Value of type "String" has no property named "__Item".
     for _, shop in Shops.OwnProps() {
         enabled := IniRead(settingsFile, shop.name, shop.name) + 0
         if (!enabled)
@@ -841,9 +871,6 @@ F2::
     ; Gdip_DisposeImage(pBMScreen)
     PauseMacro()
 }
-
-
-
 
 
 

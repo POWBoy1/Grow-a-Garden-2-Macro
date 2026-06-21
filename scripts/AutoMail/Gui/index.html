@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Epic's GAG 2 Macro UI</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+
+    <div class="window-controls" id="ahkTitleBar">
+      <div class="macrotitle">
+        <img src="../../images/GameIcon.ico" alt="Icon">
+        Epic's Auto Mail GAG 2 Macro
+      </div>
+      
+      <div class="title-buttons">
+        <button class="minimizeButton" onclick="ahk.global.WinMinimize('A')">—</button>
+        <button class="closeButton" onclick="ahk.global.WinClose('A')">x</button>
+      </div>
+    </div>
+
+    <div id="Shops tab" class="tab active split-tab-layout">
+
+
+      <div class="rewards-grid" style="margin-top: 50px;">
+        <div class="reward-box">
+          <div class="reward-header">
+            <span>Username:</span>
+            <div class="info-tooltip-holder">
+              <svg viewBox="0 0 24 24" class="info-svg"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+              <div class="tooltip-box">Roblox username to send the items to.</div>
+            </div>
+          </div>
+          <div class="reward-options raw-input-field"><input type="text" id="username" placeholder="epicboy8486"/></div>
+        </div>
+
+        <div class="reward-box">
+          <div class="reward-header">
+            <span>Total Item Count:</span>
+            <div class="info-tooltip-holder">
+              <svg viewBox="0 0 24 24" class="info-svg"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+              <div class="tooltip-box">Enter total number of items you want to send.</div>
+            </div>
+          </div>
+          <div class="reward-options raw-input-field"><input type="text" id="itemcount" placeholder="69"/></div>
+        </div>
+
+
+        <div class="reward-box">
+          <div class="reward-header">
+            <span>Picture set:</span>
+            <div class="info-tooltip-holder">
+              <svg viewBox="0 0 24 24" class="info-svg"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+              <div class="tooltip-box">Enter total number of items you want to send.</div>
+            </div>
+          </div>
+          <button class="button-style" onclick="ahk.ButtonClick.Func('InitImage')">Get Image</button>
+        </div>
+
+
+        <div class="reward-box">
+          <div class="reward-header">
+            <span>Picture set:</span>
+            <div class="info-tooltip-holder">
+              <svg viewBox="0 0 24 24" class="info-svg"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+              <div class="tooltip-box">Enter total number of items you want to send.</div>
+            </div>
+          </div>
+          <!-- <div class="reward-options raw-input-field"><input type="text" id="idk" placeholder="69"/></div> -->
+          <img src="../../../images/Scorch.png" style="width: auto; height: 50px; vertical-align: middle;" onerror="this.src='../../../images/Other/Placeholder.webp'">
+        </div>
+
+      </div>
+        
+    </div>
+
+
+
+    <div class="footer">
+      <div class="footer-buttons-container">
+        <button onclick="ahk.ButtonClick.Func('Start')">Start (F1)</button>
+        <button onclick="ahk.ButtonClick.Func('Pause')">Pause (F2)</button>
+        <button onclick="ahk.ButtonClick.Func('Stop')">Stop (F3)</button>
+      </div>
+
+      <div class="footer-status">
+        <h3 class="creator-name">Made by _epic.</h3>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

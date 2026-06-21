@@ -44,7 +44,6 @@ Shops := {
 
 
 
-
 RewardInterupt() {
     global Shops
 
@@ -52,6 +51,7 @@ RewardInterupt() {
     currentTime := nowUnix()
 
     for _, shop in Shops.OwnProps() {
+        ; MsgBox(_)
         if (currentTime - shop.lastTime >= shop.duration) {
             shop.lastTime := currentTime
             Rewardlist.Push(1)

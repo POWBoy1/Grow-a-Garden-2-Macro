@@ -1,50 +1,14 @@
 let cachedData = null;
 
-async function fetchAllItems() {
-  if (!cachedData) {
-    const response = await fetch('https://raw.githubusercontent.com/epicisgood/GAG-2-Updater/refs/heads/main/items.json');
-    cachedData = await response.json();
-  }
-  return cachedData;
-}
-
-async function getCategoryData(category) {
-  const data = await fetchAllItems();
-  return {
-    rawItems: data[category],
-    names: data[category].map(item => item.name)
-  };
-}
-
-
 
 
 
 
 async function onSaveClick() {
   const cfg = {
-    url: document.getElementById('url').value,
-    discordID: document.getElementById('discordID').value,
-    VipLink: document.getElementById('VipLink').value,
-    MoveSpeed: document.getElementById('MoveSpeed').value,
-    ThemeToggle: +document.getElementById('ThemeToggle').checked,
-
-    dynamicItems: {} 
+    username: document.getElementById('username').value,
+    itemcount: document.getElementById('itemcount').value,
   };
-
-  for (const category of CATEGORIES) {
-    const { names } = await getCategoryData(category);
-    names.push(category);
-
-    cfg.dynamicItems[category] = {};
-
-    names.forEach(name => {
-      const element = document.getElementById(sanitizeId(name));
-      if (element) {
-        cfg.dynamicItems[category][name] = element.checked;
-      }
-    });
-  }
 
   ahk.Save.Func(JSON.stringify(cfg));
   console.log("Config Saved:", cfg);
@@ -55,11 +19,8 @@ function applySettings(payload) {
   console.log("Applying incoming configurations:", settings);
 
   const fieldMap = {
-    'url': settings.url,
-    'discordID': settings.discordID,
-    'VipLink': settings.VipLink,
-    'MoveSpeed': settings.MoveSpeed,
-    'ThemeToggle': !!+settings.ThemeToggle,
+    'username': settings.username,
+    'itemcount': settings.itemcount,
   };
 
   Object.entries(fieldMap).forEach(([id, value]) => {
@@ -70,15 +31,6 @@ function applySettings(payload) {
     }
   });
 
-  if (settings.dynamicItems) {
-    Object.entries(settings.dynamicItems).forEach(([category, items]) => {
-      for (const itemName in items) {
-        const el = document.getElementById(sanitizeId(itemName));
-        if (el) el.checked = !!+items[itemName];
-      }
-    });
-  }
-
   handleThemeChange();
 
   onSaveClick();
@@ -88,55 +40,10 @@ function applySettings(payload) {
 
 
 
-const CATEGORIES = [
-  "Seeds", "Gears", "Crates"
-];
-
-
-const sanitizeId = (str) => str.replace(/\s+/g, '');
-
-const getInputType = (category) => ["PlaceHolder_For_Radio_Options_I_Guess"].includes(category) ? "radio" : "checkbox";
-
-
-async function buildDynamicItemGrids() {
-  for (const category of CATEGORIES) {
-    const { rawItems } = await getCategoryData(category);
-    const rewardGrid = document.querySelector(`#${category}Grid`);
-    if (!rewardGrid) continue;
-
-    const inputType = getInputType(category);
-    const inputName = inputType === "radio" ? `name="${category}"` : "";
-
-    rawItems.forEach(item => {
-      const sanitizedName = sanitizeId(item.name);
-      let imgPath;
-      if (item.image != "") {
-        imgPath = item.image;
-      } else {
-        imgPath = `../../images/${category}/${item.name}.webp`;
-      }
-
-      const boxCard = document.createElement("div");
-      boxCard.className = "reward-box";
-      boxCard.innerHTML = `
-        <div class="reward-header">
-          <img src="${imgPath}" style="width: 28px; height: 28px; vertical-align: middle;" onerror="this.src='../../images/Other/Placeholder.webp'">
-          <span>${item.name}</span>
-        </div>
-        <div class="reward-options">
-          <label><input type="${inputType}" id="${sanitizedName}" ${inputName}>Claim</label>
-        </div>
-      `;
-      rewardGrid.appendChild(boxCard);
-    });
-  }
-}
 
 
 
 document.addEventListener("DOMContentLoaded", async () => {
-
-  await buildDynamicItemGrids();
   ahk.ReadSettings.Func();
   window.chrome.webview.addEventListener('message', applySettings);
 
@@ -230,24 +137,7 @@ function handleThemeChange() {
 
 
 
-function switchTab(tabId) {
-  document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
-  
-  const activeTab = document.getElementById(tabId);
-  if (activeTab) activeTab.classList.add('active');
-}
 
-function switchSubTab(subTabId) {
-  document.querySelectorAll('.sub-tab').forEach(tab => tab.classList.remove('active'));
-  document.querySelectorAll('.sidebar-btn').forEach(btn => btn.classList.remove('active'));
-  
-  const targetSubTab = document.getElementById(subTabId);
-  if (targetSubTab) targetSubTab.classList.add('active');
-  
-  if (window.event && window.event.currentTarget) {
-    window.event.currentTarget.classList.add('active');
-  }
-}
 
 
 
