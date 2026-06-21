@@ -801,7 +801,7 @@ MainLoop() {
     } catch {
         Sleep(10)
     }
-    CloseChat() 
+    CloseChat()
     Close_Leaderboard()
     CameraCorrection()
     BuySeeds()

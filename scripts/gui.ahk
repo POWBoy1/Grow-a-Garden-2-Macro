@@ -170,6 +170,11 @@ SendSettings() {
     SettingsJson := {}
     for key in CORE_SETTINGS {
         SettingsJson.%key% := IniRead(settingsFile, "Settings", key, "")
+
+        if (key == "MoveSpeed") {
+            SettingsJson.%key% := IniRead(settingsFile, "Settings", key, 16)
+        }
+        
     }
 
     SettingsJson.dynamicItems := {}
