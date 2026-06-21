@@ -117,6 +117,7 @@ WebButtonClickEvent(button) {
             exe_path32 := A_AhkPath
             run '"' exe_path32 '" /script "' A_WorkingDir '/scripts/AutoMail/AutoMailer.ahk"'
             StopMacro()
+            ExitApp()
 	}
 }
 

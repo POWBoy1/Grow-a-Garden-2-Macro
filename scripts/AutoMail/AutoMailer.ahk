@@ -586,10 +586,10 @@ StopMacro(*) {
     PlayerStatus("Closed Auto Mail Grow A Garden 2 Macro", "0xff5e00", , false, , false)
     Send "{" Dkey " up}{" Wkey " up}{" Akey " up}{" Skey " up}{F14 up}"
     Try Gdip_Shutdown(pToken)
-    ; ExitApp()
     exe_path32 := A_AhkPath
     scriptPath := A_WorkingDir . "\scripts\Epic's_GAG2_macro.ahk"
     run '"' exe_path32 '" /script "' scriptPath '"'
+    ExitApp()
 }
 
 PauseToggle := true
