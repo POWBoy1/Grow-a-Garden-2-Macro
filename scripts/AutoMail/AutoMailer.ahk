@@ -583,7 +583,7 @@ ResetMacro(*) {
     Reload 
 }
 StopMacro(*) {
-    PlayerStatus("Closed Auto Mail Grow A Garden 2 Macro", "0xff5e00", , false, , false)
+    PlayerStatus("Closed Auto Mail GAG 2 Macro", "0xff5e00", , false, , false)
     Send "{" Dkey " up}{" Wkey " up}{" Akey " up}{" Skey " up}{F14 up}"
     Try Gdip_Shutdown(pToken)
     exe_path32 := A_AhkPath
@@ -599,11 +599,11 @@ PauseMacro(*){
     if PauseToggle {
         Pause(false) ; Unpause
         ToolTip "Macro Unpaused"
-        PlayerStatus("Unpaused Auto Mail Grow A Garden 2 Macro", "0x91ff00", , false, , false)
+        PlayerStatus("Unpaused Auto Mail GAG 2 Macro", "0x91ff00", , false, , false)
     } else {
         Pause(true)  ; Pause
         ToolTip "Macro Paused"
-        PlayerStatus("Paused Auto Mail Grow A Garden 2 Macro", "0x003cff", , false, , false)
+        PlayerStatus("Paused Auto Mail GAG 2 Macro", "0x003cff", , false, , false)
     }
     SetTimer () => ToolTip(), -1000
 }
