@@ -113,6 +113,10 @@ WebButtonClickEvent(button) {
 			Send("{F2}")
         case "Stop":
 			Send("{F3}")
+        case "AutoMail":
+            exe_path32 := A_AhkPath
+            run '"' exe_path32 '" /script "' A_WorkingDir '/scripts/AutoMail/AutoMailer.ahk"'
+            StopMacro()
 	}
 }
 
